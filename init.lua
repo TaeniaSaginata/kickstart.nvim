@@ -975,9 +975,9 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug'
-  -- require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
+  require 'kickstart.plugins.debug'
+  require 'kickstart.plugins.indent_line'
+  -- require 'kickstart.plugins.lint' -- WARNING: Throws errors in markdownlint if enabled
   -- require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
   -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
@@ -990,13 +990,48 @@ end
 
 do
   -- needs treesitter
-  vim.pack.add({
+  vim.pack.add{{
       -- 'https://github.com/nvim-mini/mini.nvim',         -- if you use the mini.nvim suite
       -- 'https://github.com/nvim-mini/mini.icons',        -- if you use standalone mini plugins
       -- 'https://github.com/nvim-tree/nvim-web-devicons', -- if you prefer nvim-web-devicons
-      'https://github.com/MeanderingProgrammer/render-markdown.nvim',
-  })
+      src = gh "MeanderingProgrammer/render-markdown.nvim",
+  }}
   require('render-markdown').setup({}) -- only mandatory if you want to set custom options
+end
+
+do
+  vim.pack.add{ {
+      src = gh "lukas-reineke/indent-blankline.nvim",
+      name = "ibl"
+  } }
+  ---@module "ibl"
+  ---@type "ibl.config"
+
+  local highlight = {
+      "RainbowRed",
+      "RainbowYellow",
+      "RainbowBlue",
+      "RainbowOrange",
+      "RainbowGreen",
+      "RainbowViolet",
+      "RainbowCyan",
+  }
+
+  local hooks = require "ibl.hooks"
+  -- create the highlight groups in the highlight setup hook, so they are reset
+  -- every time the colorscheme changes
+  hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+      vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+      vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+      vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+      vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+      vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+      vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+      vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+  end)
+
+  require("ibl").setup { indent = { highlight = highlight } }
+
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`

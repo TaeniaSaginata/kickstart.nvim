@@ -999,6 +999,12 @@ do
   require('render-markdown').setup({}) -- only mandatory if you want to set custom options
 end
 
+
+
+-- ============================================================
+-- --------------- [[ Indent Blankline ]] ---------------------
+-- ============================================================
+
 do
   vim.pack.add{ {
       src = gh "lukas-reineke/indent-blankline.nvim",
@@ -1033,6 +1039,51 @@ do
   require("ibl").setup { indent = { highlight = highlight } }
 
 end
+
+-- ============================================================
+-- ------------------ [[ NeoTree ]] ---------------------------
+-- ============================================================
+
+-- do
+-- 
+-- vim.pack.add({
+-- {
+-- src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
+-- version = vim.version.range('3')
+-- },
+-- -- dependencies
+-- "https://github.com/nvim-lua/plenary.nvim",
+-- "https://github.com/MunifTanjim/nui.nvim",
+-- -- optional, but recommended
+-- "https://github.com/nvim-tree/nvim-web-devicons",
+-- })
+-- 
+-- require('neo-tree').setup({ })
+-- 
+-- end
+
+-- ============================================================
+
+
+
+-- ============================================================
+-- -------------------- [[ UndoTree ]] ------------------------
+-- ============================================================
+
+do
+
+  vim.pack.add({
+    {
+      src = gh "jiaoshijie/undotree",
+    },
+  })
+
+  vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
+  require('undotree').setup({ })
+
+end
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

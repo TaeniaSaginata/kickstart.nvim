@@ -977,161 +977,23 @@ do
   --
   require 'kickstart.plugins.debug'
   require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint' -- WARNING: Throws errors in markdownlint if enabled
-  -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
-  -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+  require 'kickstart.plugins.lint'
+  require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- require 'custom.plugins'
-end
-
-do
-  -- needs treesitter
-  vim.pack.add{{
-      -- 'https://github.com/nvim-mini/mini.nvim',         -- if you use the mini.nvim suite
-      -- 'https://github.com/nvim-mini/mini.icons',        -- if you use standalone mini plugins
-      -- 'https://github.com/nvim-tree/nvim-web-devicons', -- if you prefer nvim-web-devicons
-      src = gh "MeanderingProgrammer/render-markdown.nvim",
-  }}
-  require('render-markdown').setup({}) -- only mandatory if you want to set custom options
-end
-
-
-
--- ============================================================
--- --------------- [[ Indent Blankline ]] ---------------------
--- ============================================================
-
-do
-  vim.pack.add{ {
-      src = gh "lukas-reineke/indent-blankline.nvim",
-      name = "ibl"
-  } }
-  ---@module "ibl"
-  ---@type "ibl.config"
-
-  local highlight = {
-      "RainbowRed",
-      "RainbowYellow",
-      "RainbowBlue",
-      "RainbowOrange",
-      "RainbowGreen",
-      "RainbowViolet",
-      "RainbowCyan",
-  }
-
-  local hooks = require "ibl.hooks"
-  -- create the highlight groups in the highlight setup hook, so they are reset
-  -- every time the colorscheme changes
-  hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-      vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-      vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-      vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-      vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-      vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-      vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-      vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-  end)
-
-  require("ibl").setup { indent = { highlight = highlight } }
+  require 'custom.plugins.indent_blankline'
+  require 'custom.plugins.learnlua'
+  require 'custom.plugins.render_markdown'
+  require 'custom.plugins.undotree'
+  require 'custom.plugins.vimtex'
 
 end
 
 -- ============================================================
--- ------------------ [[ NeoTree ]] ---------------------------
--- ============================================================
-
--- do
--- 
--- vim.pack.add({
--- {
--- src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
--- version = vim.version.range('3')
--- },
--- -- dependencies
--- "https://github.com/nvim-lua/plenary.nvim",
--- "https://github.com/MunifTanjim/nui.nvim",
--- -- optional, but recommended
--- "https://github.com/nvim-tree/nvim-web-devicons",
--- })
--- 
--- require('neo-tree').setup({ })
--- 
--- end
-
--- ============================================================
-
-
--- ============================================================
--- -------------------- [[ UndoTree ]] ------------------------
--- ============================================================
-
-do
-
-  vim.pack.add({
-    {
-      src = gh "jiaoshijie/undotree",
-    },
-  })
-
-  vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
-  require('undotree').setup({ })
-
-end
-
--- ============================================================
-
-
--- ============================================================
--- -------------------- [[ LearnLua ]] ------------------------
--- ============================================================
-
-do
-
-  vim.pack.add({
-    {
-  src = gh "urtzienriquez/learnlua.nvim",
-    },
-  })
-
-  require('learnlua')
-  -- CMD: :Learn
-
-end
-
--- ============================================================
-
-
--- ============================================================
--- -------------------- [[ VimTex ]] ------------------------
--- ============================================================
-
-do
-  -- Note that v2.15 is NOT the most recent version!
-  vim.pack.add { { src = "https://github.com/lervag/vimtex" } }
-
-  -- To use the most recent version from git, you can do simply:
-  vim.pack.add { "https://github.com/lervag/vimtex" }
-
-  -- VimTeX configuration goes here, e.g.
-  vim.g.vimtex_view_method = "zathura"
-  vim.g.vimtex_compiler_method = 'latexmk'
-
-end
-
--- ============================================================
-
-
--- ============================================================
--- -------------------- [[ Makefile linter ]] ------------------------
--- ============================================================
-
-
--- ============================================================
-
 
 
 -- The line beneath this is called `modeline`. See `:help modeline`
